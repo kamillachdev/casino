@@ -1,7 +1,7 @@
 ﻿#include <iostream>
-#include <cwchar>
 #include <windows.h>
 #include <conio.h>
+#include <cstdlib>
 
 using std::cout;
 
@@ -12,18 +12,25 @@ void gotoXY(int, int);
 
 int main()
 {
-    int menu_element = 0, run, x = 16;
+    int menu_element = 0, x = 16;
     bool running = true;
 
     //the appearance of the menu
     system("Color 0A");
-    cout << "\n=======================================================================================================================================================";
-    cout << "\n BBBBB    UU   UU   LL       LL      IIIIIIIII    SSSSSSSSS   HH    HH             CCCCC       A        SSSSSSSSS   IIIIIIIII   NN     NN    OOOOOOOO  ";
-    cout << "\n B   B    UU   UU   LL       LL         III       SS          HH    HH           CC           A  A      SS             III      NN N   NN   OO      OO ";
-    cout << "\n BBBBB    UU   UU   LL       LL         III       SSSSSSSSS   HHHHHHHH          CC           A    A     SSSSSSSSS      III      NN  N  NN   OO      OO ";
-    cout << "\n B   B    UU   UU   LL       LL         III              SS   HH    HH           CC         AAAAAAAA           SS      III      NN   N NN   OO      OO ";
-    cout << "\n BBBBBB    UUUUU    LLLLLL   LLLLLL  IIIIIIIII    SSSSSSSSS   HH    HH             CCCCC   A        A   SSSSSSSSS   IIIIIIIII   NN     NN    OOOOOOOO  ";
-    cout << "\n=======================================================================================================================================================\n";
+    cout << "\n=======================================================================";
+    cout << "\n BBBBBBB   UU   UU   LL       LL      IIIIIIIII    SSSSSSSSS   HH    HH";
+    cout << "\n BB   BB   UU   UU   LL       LL         III       SS          HH    HH ";
+    cout << "\n BBBBBB    UU   UU   LL       LL         III       SSSSSSSSS   HHHHHHHH ";
+    cout << "\n BB   BB   UU   UU   LL       LL         III              SS   HH    HH ";
+    cout << "\n BBBBBBB    UUUUU    LLLLLL   LLLLLL  IIIIIIIII    SSSSSSSSS   HH    HH ";
+    cout << "\n=======================================================================";
+    cout << "\n   CCCCC       A        SSSSSSSSS    IIIIIIIII   NN     NN    OOOOOOOO  ";
+    cout << "\n CC           A  A      SS              III      NN N   NN   OO      OO ";
+    cout << "\nCC           A    A     SSSSSSSSS       III      NN  N  NN   OO      OO ";
+    cout << "\n CC         AAAAAAAA           SS       III      NN   N NN   OO      OO ";
+    cout << "\n   CCCCC   A        A   SSSSSSSSS    IIIIIIIII   NN     NN    OOOOOOOO  ";
+    cout << "\n=======================================================================";
+
     gotoXY(60, 16); cout << "->";
 
     while (running)

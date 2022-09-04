@@ -1,7 +1,8 @@
 ﻿#include <iostream>
 #include <windows.h>
 #include <conio.h>
-#include <cstdlib>
+#include "user.h"
+#include "menu.h"
 
 using std::cout;
 
@@ -12,6 +13,7 @@ void gotoXY(int, int);
 
 int main()
 {
+    menu menu;
     int menu_element = 0, x = 16;
     bool running = true;
 
@@ -31,31 +33,31 @@ int main()
     cout << "\n   CCCCC   A        A   SSSSSSSSS    IIIIIIIII   NN     NN    OOOOOOOO  ";
     cout << "\n=======================================================================";
 
-    gotoXY(60, 16); cout << "->";
+    gotoXY(16, 16); cout << "->";
 
     while (running)
     {
-        gotoXY(62, 16); cout << "~~~~  PLAY AS A DEMO USER    ~~~~";
-        gotoXY(62, 17); cout << "~~~~  LOG IN TO YOUR ACCOUNT ~~~~";
-        gotoXY(62, 18); cout << "~~~~  CREATE A NEW ACCOUNT   ~~~~";
-        gotoXY(62, 19); cout << "~~~~       QUIT CASINO       ~~~~";
+        gotoXY(18, 16); cout << "~~~~  PLAY AS A DEMO USER    ~~~~";
+        gotoXY(18, 17); cout << "~~~~  LOG IN TO YOUR ACCOUNT ~~~~";
+        gotoXY(18, 18); cout << "~~~~  CREATE A NEW ACCOUNT   ~~~~";
+        gotoXY(18, 19); cout << "~~~~       QUIT CASINO       ~~~~";
 
         system("pause>nul"); // the >nul bit causes it the print no message
 
         if (GetAsyncKeyState(VK_DOWN) && x != 19) //arrow down pressed
         {
-            gotoXY(60, x); cout << "  ";
+            gotoXY(16, x); cout << "  ";
             x++;
-            gotoXY(60, x); cout << "->";
+            gotoXY(16, x); cout << "->";
             menu_element++;
             continue;
         }
 
         if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
         {
-            gotoXY(60, x); cout << "  ";
+            gotoXY(16, x); cout << "  ";
             x--;
-            gotoXY(60, x); cout << "->";
+            gotoXY(16, x); cout << "->";
             menu_element--;
             continue;
         }
@@ -66,22 +68,21 @@ int main()
             {
                 case 0:
                 {
-                    //here gon be function
+                    menu.openBetaGame();
                     break;
                 }
                 case 1:
                 {
-                    //here gon be function
+                    menu.loginProcess();
                     break;
                 }
                 case 2:
                 {
-                    //here gon be function
+                    menu.registrationProcess();
                     break;
                 }
                 case 3:
                 {
-                    //here gon be function
                     running = false;
                 }
             }

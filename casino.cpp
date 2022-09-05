@@ -6,10 +6,10 @@
 
 using std::cout;
 
-HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
-COORD CursorPosition; // used for goto
+static HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
+static COORD CursorPosition; // used for goto
 
-void gotoXY(int, int);
+static void gotoXY(int, int);
 
 int main()
 {

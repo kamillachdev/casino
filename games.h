@@ -1,8 +1,13 @@
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include "user.h"
 #pragma once
+
 class games
 {
 private:
-	void guessingGame();
+	double guessingGame();
 public:
 	void chooseGame(double);
 };

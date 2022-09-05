@@ -1,4 +1,5 @@
 #include <iostream>
+#pragma once
 
 using std::string;
 
@@ -15,7 +16,7 @@ public:
 	bool loginValidation(string unC, string pwC);
 
 	void showAccountBalance();
-	void setStartingBalance(double balance);
+	double setStartingBalance();
 	void addBalance(double balance);
 	void subtractBalance(double balance);
 

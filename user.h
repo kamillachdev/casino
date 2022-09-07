@@ -1,25 +1,15 @@
 #include <iostream>
+#include <windows.h>
+#include <conio.h>
 #pragma once
 
 using std::string;
 
 class user
 {
-private:
-	string username;
-	string password;
-	double accountBalance;
 public:
-	user(); //empty constructor
-	user(string un, string pw); //full constructor
-
-	bool loginValidation(string unC, string pwC);
-
 	void showAccountBalance();
-	double setStartingBalance();
 	void addBalance(double balance);
 	void subtractBalance(double balance);
-
-	~user(); //destructor
 };
 

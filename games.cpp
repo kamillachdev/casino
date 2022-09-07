@@ -20,23 +20,23 @@ double games::guessingGame()
 
 void games::chooseGame(double currentBalance)
 {
-	int element = 0, x = 32;
+	int element = 0, x = 25;
 	bool running = true;
 
-	gotoXY(18, 29); cout << "~~ Your current balance: " << currentBalance << " USD ~~";
-	gotoXY(18, 30); cout << "~~~ Choose game you want to play  ~~~";
-	gotoXY(16, 32); cout << "->";
+	gotoXY(18, 22); cout << "~~ Your current balance: " << currentBalance << " USD ~~";
+	gotoXY(18, 23); cout << "~~~ Choose game you want to play  ~~~";
+	gotoXY(16, 25); cout << "->";
 
 	while (running)
 	{
-		gotoXY(18, 32);cout << "~~~~~~~~~ Guessing game ~~~~~~~~~"; //REMEMER ADD LEVEREGE TO EACH GAME
-		gotoXY(18, 33);cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
-		gotoXY(18, 34);cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
-		gotoXY(18, 35);cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		gotoXY(18, 25); cout << "~~~~~~~~~ Guessing game ~~~~~~~~~"; //REMEMER ADD LEVEREGE TO EACH GAME
+		gotoXY(18, 26); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		gotoXY(18, 27); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		gotoXY(18, 28); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
 
 		system("pause>nul");
 
-		if (GetAsyncKeyState(VK_DOWN) && x != 35) //arrow down pressed
+		if (GetAsyncKeyState(VK_DOWN) && x != 28) //arrow down pressed
 		{
 			gotoXY(16, x); cout << "  ";
 			x++;
@@ -45,7 +45,7 @@ void games::chooseGame(double currentBalance)
 			continue;
 		}
 
-		if (GetAsyncKeyState(VK_UP) && x != 32) //arrow up pressed
+		if (GetAsyncKeyState(VK_UP) && x != 25) //arrow up pressed
 		{
 			gotoXY(16, x); cout << "  ";
 			x--;

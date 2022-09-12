@@ -2,54 +2,50 @@
 
 using std::cout;
 
-HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
-COORD CursorPosition; // used for goto
 
-void gotoXY(int x, int y)
-{
-	CursorPosition.X = x;
-	CursorPosition.Y = y;
-	SetConsoleCursorPosition(console, CursorPosition);
-}
 
 double games::guessingGame()
 {
+	mainmenu mainmenu;
+
 	double result = 0;
 	return 0;
 }
 
 void games::chooseGame(double currentBalance)
 {
+	mainmenu mainmenu;
+
 	int element = 0, x = 25;
 	bool running = true;
 
-	gotoXY(18, 22); cout << "~~ Your current balance: " << currentBalance << " USD ~~";
-	gotoXY(18, 23); cout << "~~~ Choose game you want to play  ~~~";
-	gotoXY(16, 25); cout << "->";
+	mainmenu.gotoXY(18, 22); cout << "~~ Your current balance: " << currentBalance << " USD ~~";
+	mainmenu.gotoXY(18, 23); cout << "~~~ Choose game you want to play  ~~~";
+	mainmenu.gotoXY(16, 25); cout << "->";
 
 	while (running)
 	{
-		gotoXY(18, 25); cout << "~~~~~~~~~ Guessing game ~~~~~~~~~"; //REMEMER ADD LEVEREGE TO EACH GAME
-		gotoXY(18, 26); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
-		gotoXY(18, 27); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
-		gotoXY(18, 28); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 25); cout << "~~~~~~~~~ Guessing game ~~~~~~~~~"; //REMEMER ADD LEVEREGE TO EACH GAME
+		mainmenu.gotoXY(18, 26); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 27); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 28); cout << "~~~~~~~~~ In progress ~~~~~~~~~~~";
 
 		system("pause>nul");
 
 		if (GetAsyncKeyState(VK_DOWN) && x != 28) //arrow down pressed
 		{
-			gotoXY(16, x); cout << "  ";
+			mainmenu.gotoXY(16, x); cout << "  ";
 			x++;
-			gotoXY(16, x); cout << "->";
+			mainmenu.gotoXY(16, x); cout << "->";
 			element++;
 			continue;
 		}
 
 		if (GetAsyncKeyState(VK_UP) && x != 25) //arrow up pressed
 		{
-			gotoXY(16, x); cout << "  ";
+			mainmenu.gotoXY(16, x); cout << "  ";
 			x--;
-			gotoXY(16, x); cout << "->";
+			mainmenu.gotoXY(16, x); cout << "->";
 			element--;
 			continue;
 		}
@@ -84,6 +80,9 @@ void games::chooseGame(double currentBalance)
 			}
 		}
 	}
-
+	for (int i = 22; i <= 29; i++)
+	{
+		mainmenu.gotoXY(16, i); cout << "                                                        "; //clearing space
+	}
 
 }

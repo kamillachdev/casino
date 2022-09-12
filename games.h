@@ -1,8 +1,7 @@
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
-#include "user.h"
 #pragma once
+#include <iostream>
+#include "user.h"
+#include "mainmenu.h"
 
 class games
 {

@@ -1,26 +1,18 @@
+#pragma warning(disable : 4996)
 #include "menu.h"
 
 using std::cout;
 using std::cin;
 using std::string;
 
-
-static HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
-static COORD CursorPosition; // used for goto
-
 std::ofstream writeDatafile;
 std::ifstream readDataFile;
 
 string encryptingPassword(string);
 string decryptingPassword(string);
-double setStartingBalance();
 
-static void gotoXY(int x, int y)
-{
-	CursorPosition.X = x;
-	CursorPosition.Y = y;
-	SetConsoleCursorPosition(console, CursorPosition);
-}
+std::vector<string> lines;
+string usernameGet, passwordGet, balanceGet;
 
 
 void menu::openBetaGame()
@@ -33,12 +25,81 @@ void menu::openBetaGame()
 
 void menu::loginProcess()
 {
+	mainmenu mainmenu;
 
+	string username = "";
+	string password = "";
+	
+	mainmenu.gotoXY(18, 16); cout << "Enter your name: ";
+	cin >> username;
+	mainmenu.gotoXY(18, 17); cout << "Enter your password: ";
+	cin >> password;
+	mainmenu.clearingSpace();
+
+	readDataFile.open("data" + username + ".txt");
+
+	if (readDataFile.fail())
+	{
+		mainmenu.gotoXY(18, 16); cout << "There is no user named " << username << "!";
+		cin.ignore();
+		cin.get();
+		mainmenu.clearingSpace();
+
+		char* filename1 = new char[username.length() + 1];
+		strcpy(filename1, "data");
+
+		char* filename2 = new char[username.length() + 1];
+		strcpy(filename2, username.c_str());
+
+		char* filename3 = new char[username.length() + 1];
+		strcpy(filename3, ".txt");
+
+		char* filename = new char[username.length() + 1];
+		strcpy(filename, filename1);
+		strcpy(filename, filename2);
+		strcpy(filename, filename3);
+
+
+		remove(filename);
+		delete[] filename1;
+		delete[] filename2;
+		delete[] filename3;
+		delete[] filename;
+		return;
+	}
+
+	getline(readDataFile, usernameGet);
+	getline(readDataFile, passwordGet);
+	getline(readDataFile, balanceGet);
+	readDataFile.close();
+
+	if (username == usernameGet && password == decryptingPassword(passwordGet))
+	{
+		mainmenu.gotoXY(18, 16); cout << "You logged in!";
+		cin.ignore();
+		cin.get();
+		mainmenu.clearingSpace();
+
+		games games;
+
+		double balance = stod(balanceGet);
+		games.chooseGame(balance);
+	}
+	else
+	{
+		mainmenu.gotoXY(18, 16); cout << "Wrong password!";
+		cin.ignore();
+		cin.get();
+		mainmenu.clearingSpace();
+		return;
+	}
 }
 
 
 void menu::registrationProcess()
 {
+	mainmenu mainmenu;
+
 	std::regex unRegex("^[a-zA-Z0-9\_\.]{3,50}$");
 	std::regex pwRegex("^[a-zA-Z0-9\_\.\-]{8,50}$");
 
@@ -48,26 +109,29 @@ void menu::registrationProcess()
 
 	while (validation)
 	{
-		gotoXY(18, 22); cout << "Enter your username: ";
+		mainmenu.gotoXY(18, 16); cout << "Enter your username: ";
 		cin >> username;
+		mainmenu.clearingSpace();
 		if (!regex_match(username, unRegex))
 		{
-			gotoXY(18, 23); cout << "Username must be at least 3 characters long(letters, numbers, '_', '.')!";
+			mainmenu.gotoXY(18, 16); cout << "Username must be at least 3 characters long(letters, numbers, '_', '.')!";
+			cin.ignore();
+			cin.get();
+			mainmenu.clearingSpace();
+			continue;
 		}
 		else
 		{
 			writeDatafile.open("data" + username + ".txt");
 			if (!writeDatafile.fail()) //checking if user already exists
 			{
-				gotoXY(18, 23); cout << "Username named " << username << " already exists!";
+				mainmenu.gotoXY(18, 16); cout << "Username named " << username << " already exists!";
 				cin.ignore();
 				cin.get();
-				gotoXY(18, 22); cout << "                                                                        "; //clearing the ask
-				gotoXY(18, 23); cout << "                                                                        "; //clearing the warning
+				mainmenu.clearingSpace();
 				continue;
 			}
-			gotoXY(18, 22); cout << "                                                                        ";
-			gotoXY(18, 23); cout << "                                                                        ";
+
 			validation = false;
 		}
 	}
@@ -76,35 +140,37 @@ void menu::registrationProcess()
 
 	while (validation)
 	{
-		gotoXY(18, 22); cout << "Enter your password: ";
+		mainmenu.gotoXY(18, 16); cout << "Enter your password: ";
 		cin >> password;
+		mainmenu.clearingSpace();
 		if (!regex_match(password, pwRegex))
 		{
-			gotoXY(18, 23); cout << "Password must be minimum eight characters, at least one letter, one number and one special character!";
-			gotoXY(39, 22); cout << "                                                         "; //clearing the wrong password
+			mainmenu.gotoXY(18, 16); cout << "Password must be minimum eight characters, at least one letter, one number and one special character!";
+			cin.ignore();
+			cin.get();
+			mainmenu.clearingSpace();
+			continue;
 		}
 		else
 		{
-			gotoXY(18, 22); cout << "                                                                                                     "; //clearing the ask
-			gotoXY(18, 23); cout << "                                                                                                     "; //clearing the warning
 			validation = false;
 		}
 	}
 
 
 	string securedPw = encryptingPassword(password);
-	double xbalance = setStartingBalance();
+	double balance = setStartingBalance();
 
 	writeDatafile.open("data" + username + ".txt");
-	writeDatafile << username << "\n" << securedPw << "\n" << xbalance;
+	writeDatafile << username << "\n" << securedPw << "\n" << balance;
 	writeDatafile.close();
 
-	gotoXY(18, 22); cout << "Account created successfully! Now you can login.";
+	mainmenu.gotoXY(18, 16); cout << "Account created successfully! Now you can login.";
 
 	cin.ignore();
 	cin.get(); //wait for the user to press enter
 
-	gotoXY(18, 22); cout << "                                                ";
+	mainmenu.clearingSpace();
 }
 
 
@@ -123,76 +189,81 @@ string decryptingPassword(string password)
 	return password;
 }
 
-double setStartingBalance()
+double menu::setStartingBalance()
 {
-	int element = 0, x = 24;
+	mainmenu mainmenu;
+
+	int menu_element = 0, x = 17;
 	bool running = true;
+
 	double startingBalance[4] = { 10, 100, 1000, 10000 };
 	double chosenBalance = 0;
 
-	gotoXY(18, 22); cout << "Choose your starting balance: ";
-	gotoXY(16, 24); cout << "->";
+	mainmenu.gotoXY(18, 16); cout << "Choose your starting balance: ";
+	mainmenu.gotoXY(16, 17); cout << "->";
+
 	while (running)
 	{
-		gotoXY(18, 24); cout << "~~~~~~~~~~~~ 10 USD ~~~~~~~~~~~~~";
-		gotoXY(18, 25); cout << "~~~~~~~~~~~ 100 USD ~~~~~~~~~~~~~";
-		gotoXY(18, 26); cout << "~~~~~~~~~~ 1000 USD ~~~~~~~~~~~~~";
-		gotoXY(18, 27); cout << "~~~~~~~~~ 10000 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 17); cout << "~~~~~~~~~~~~ 10 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 18); cout << "~~~~~~~~~~~ 100 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 19); cout << "~~~~~~~~~~ 1000 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 20); cout << "~~~~~~~~~ 10000 USD ~~~~~~~~~~~~~";
 
-		system("pause>nul");
+		system("pause>nul"); // the >nul bit causes it the print no message
 
-		if (GetAsyncKeyState(VK_DOWN) && x != 27) //arrow down pressed
+		if (GetAsyncKeyState(VK_DOWN) && x != 20) //arrow down pressed
 		{
-			gotoXY(16, x); cout << "  ";
+			mainmenu.gotoXY(16, x); cout << "  ";
 			x++;
-			gotoXY(16, x); cout << "->";
-			element++;
+			mainmenu.gotoXY(16, x); cout << "->";
+			menu_element++;
 			continue;
 		}
 
-		if (GetAsyncKeyState(VK_UP) && x != 24) //arrow up pressed
+		if (GetAsyncKeyState(VK_UP) && x != 17) //arrow up pressed
 		{
-			gotoXY(16, x); cout << "  ";
+			mainmenu.gotoXY(16, x); cout << "  ";
 			x--;
-			gotoXY(16, x); cout << "->";
-			element--;
+			mainmenu.gotoXY(16, x); cout << "->";
+			menu_element--;
 			continue;
 		}
 
 		if (GetAsyncKeyState(VK_RETURN)) //enter pressed
 		{
-			switch (element)
+			switch (menu_element)
 			{
 				case 0:
 				{
-					chosenBalance = startingBalance[0];
+					mainmenu.clearingSpace();
 					running = false;
+					chosenBalance = startingBalance[0];
 					break;
 				}
 				case 1:
 				{
-					chosenBalance = startingBalance[1];
+					mainmenu.clearingSpace();
 					running = false;
+					chosenBalance = startingBalance[1];
 					break;
 				}
 				case 2:
 				{
-					chosenBalance = startingBalance[2];
+					mainmenu.clearingSpace();
 					running = false;
+					chosenBalance = startingBalance[2];
 					break;
 				}
 				case 3:
 				{
-					chosenBalance = startingBalance[3];
+					mainmenu.clearingSpace();
 					running = false;
+					chosenBalance = startingBalance[3];
+					break;
 				}
 			}
 		}
 	}
 
-	for (int i = 22; i <= 27; i++)
-	{
-		gotoXY(16, i); cout <<  "                                                        "; //clearing the whole choosing balance menu 
-	}
 	return chosenBalance;
 }

@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="casino.cpp" />
     <ClCompile Include="games.cpp" />
+    <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="games.h" />
+    <ClInclude Include="mainmenu.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>

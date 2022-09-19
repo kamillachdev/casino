@@ -122,8 +122,11 @@ void menu::registrationProcess()
 		}
 		else
 		{
-			writeDatafile.open("data" + username + ".txt");
-			if (!writeDatafile.fail()) //checking if user already exists
+			string fileName = "data" + username + ".txt";				   // |
+			struct stat buffer;											   // V
+			bool checkIfFIleExists = stat(fileName.c_str(), &buffer) == 0; //the fastest way to check if file exists;
+
+			if(checkIfFIleExists)
 			{
 				mainmenu.gotoXY(18, 16); cout << "Username named " << username << " already exists!";
 				cin.ignore();
@@ -131,11 +134,9 @@ void menu::registrationProcess()
 				mainmenu.clearingSpace();
 				continue;
 			}
-
-			validation = false;
 		}
+		validation = false;
 	}
-
 	validation = true;
 
 	while (validation)
@@ -193,25 +194,25 @@ double menu::setStartingBalance()
 {
 	mainmenu mainmenu;
 
-	int menu_element = 0, x = 17;
+	int menu_element = 0, x = 16;
 	bool running = true;
 
 	double startingBalance[4] = { 10, 100, 1000, 10000 };
 	double chosenBalance = 0;
 
-	mainmenu.gotoXY(18, 16); cout << "Choose your starting balance: ";
-	mainmenu.gotoXY(16, 17); cout << "->";
+	mainmenu.gotoXY(18, 15); cout << "Choose your starting balance: ";
+	mainmenu.gotoXY(16, 16); cout << "->";
 
 	while (running)
 	{
-		mainmenu.gotoXY(18, 17); cout << "~~~~~~~~~~~~ 10 USD ~~~~~~~~~~~~~";
-		mainmenu.gotoXY(18, 18); cout << "~~~~~~~~~~~ 100 USD ~~~~~~~~~~~~~";
-		mainmenu.gotoXY(18, 19); cout << "~~~~~~~~~~ 1000 USD ~~~~~~~~~~~~~";
-		mainmenu.gotoXY(18, 20); cout << "~~~~~~~~~ 10000 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 16); cout << "~~~~~~~~~~~~ 10 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 17); cout << "~~~~~~~~~~~ 100 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 18); cout << "~~~~~~~~~~ 1000 USD ~~~~~~~~~~~~~";
+		mainmenu.gotoXY(18, 19); cout << "~~~~~~~~~ 10000 USD ~~~~~~~~~~~~~";
 
 		system("pause>nul"); // the >nul bit causes it the print no message
 
-		if (GetAsyncKeyState(VK_DOWN) && x != 20) //arrow down pressed
+		if (GetAsyncKeyState(VK_DOWN) && x != 19) //arrow down pressed
 		{
 			mainmenu.gotoXY(16, x); cout << "  ";
 			x++;
@@ -220,7 +221,7 @@ double menu::setStartingBalance()
 			continue;
 		}
 
-		if (GetAsyncKeyState(VK_UP) && x != 17) //arrow up pressed
+		if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
 		{
 			mainmenu.gotoXY(16, x); cout << "  ";
 			x--;

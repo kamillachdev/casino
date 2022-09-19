@@ -84,7 +84,7 @@ void mainmenu::mainMenu()
                 }
                 case 3:
                 {
-                    running = false;
+                    exit(1);
                 }
             }
         }
@@ -100,7 +100,7 @@ void mainmenu::gotoXY(int x, int y)
 
 void mainmenu::clearingSpace()
 {
-    for (int i = 16; i <= 28; i++)
+    for (int i = 14; i <= 28; i++)
     {
         gotoXY(16, i); cout << "                                                                                                          "; //clearing the space
     }

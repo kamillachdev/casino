@@ -6,6 +6,7 @@ HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
 COORD CursorPosition; // used for goto
 
 
+
 void mainmenu::baner()
 {
     //the appearance of the menu
@@ -50,8 +51,7 @@ void mainmenu::mainMenu()
             menu_element++;
             continue;
         }
-
-        if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
+        else if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
         {
             gotoXY(16, x); cout << "  ";
             x--;
@@ -59,8 +59,7 @@ void mainmenu::mainMenu()
             menu_element--;
             continue;
         }
-
-        if (GetAsyncKeyState(VK_RETURN)) //enter pressed
+        else if (GetAsyncKeyState(VK_RETURN)) //enter pressed
         {
             switch (menu_element)
             {
@@ -88,6 +87,10 @@ void mainmenu::mainMenu()
                 }
             }
         }
+        else
+        {
+            continue;
+        }
     }
 }
 
@@ -102,6 +105,6 @@ void mainmenu::clearingSpace()
 {
     for (int i = 14; i <= 28; i++)
     {
-        gotoXY(16, i); cout << "                                                                                                          "; //clearing the space
+        gotoXY(0, i); cout << "                                                                                                          "; //clearing the space
     }
 }

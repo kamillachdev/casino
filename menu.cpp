@@ -220,8 +220,7 @@ double menu::setStartingBalance()
 			menu_element++;
 			continue;
 		}
-
-		if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
+		else if (GetAsyncKeyState(VK_UP) && x != 16) //arrow up pressed
 		{
 			mainmenu.gotoXY(16, x); cout << "  ";
 			x--;
@@ -229,8 +228,7 @@ double menu::setStartingBalance()
 			menu_element--;
 			continue;
 		}
-
-		if (GetAsyncKeyState(VK_RETURN)) //enter pressed
+		else if (GetAsyncKeyState(VK_RETURN)) //enter pressed
 		{
 			switch (menu_element)
 			{
@@ -263,6 +261,10 @@ double menu::setStartingBalance()
 					break;
 				}
 			}
+		}
+		else
+		{
+			continue;
 		}
 	}
 

@@ -1,6 +1,4 @@
 ﻿#include <iostream>
-#include <windows.h>
-#include <conio.h>
 #include "mainmenu.h"
 #include "user.h"
 #include "menu.h"

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstdlib>
 #include "user.h"
 #include "mainmenu.h"
 
